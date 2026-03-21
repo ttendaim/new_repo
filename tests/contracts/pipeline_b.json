@@ -1,0 +1,8 @@
+{
+  "script": "pipeline_b.py",
+  "output_columns": [
+    { "name": "user_id",    "dtype": "int64"          },
+    { "name": "email",      "dtype": "str"            },
+    { "name": "created_at", "dtype": "datetime64[us]" }
+  ]
+}
