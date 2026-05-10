@@ -1,0 +1,23 @@
+name: PDA Gate
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  pda-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install PDA CLI
+        run: pip install pda-sdk --extra-index-url http://pda-packages-242560909597.s3-website-us-east-1.amazonaws.com/simple/
+
+      - name: PDA Gate Check
+        env:
+          PDA_API_URL: https://ayo3kbhri2.execute-api.us-east-1.amazonaws.com/beta/
+          PDA_VOTER: ${{ github.actor }}
+        run: |
+          pda gate --repo ${{ github.repository }} \
+                   --assets github-ttendaim-new-repo \
+                   --intent CODE_CHANGE \
+                   --context "{\"branch\":\"main\",\"pr\":${{ github.event.number }},\"author\":\"${{ github.actor }}\"}" \
+                   --wait --timeout 300
